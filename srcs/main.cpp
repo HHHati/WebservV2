@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:40:47 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 12:20:55 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:28:45 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	Config	config(argv[1]);
-	try {config.check_ports(); }
+	try {config.check_content(); }
 	catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
 		return 1;

@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:32:17 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/07/09 16:11:46 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:40:10 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 
 std::vector<std::string> splitLine(const std::string& line, const std::string& sep);
 bool				charInStr(const char& c, const std::string& str);
-long				convertToByte(const std::string& value);
+long				convertToByte(std::string& value);
 std::string			get_first_line(const std::string& str);
 bool 				file_exists(const std::string& fileName);
 std::vector<char> 	readBinaryFile(const std::string& fileName);

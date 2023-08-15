@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:14:51 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 12:18:57 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:28:27 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	Config::printInfo(void) {
 	}
 }
 
-void	Config::check_ports() const {
+void	Config::check_content() const {
 	std::vector<int> ports;
 	int temp;
 	for (size_t i = 0; i < _servConf.size(); i++) {

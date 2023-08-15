@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:45:36 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/07/09 15:51:39 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:49:53 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,27 @@ bool	charInStr(const char& c, const std::string& str) {
 	return (false);
 }
 
-long	convertToByte(const std::string& value) {
-	std::string		tmp;
-	std::string		unit;
-	long			result;
-
-	tmp = value;
-	unit = tmp.substr(tmp.length() - 1, 1);
-	tmp.erase(tmp.length() - 1, 1);
-	result = std::atoi(tmp.c_str());
-	if (unit == "k" || unit == "K")
-		result *= 1024;
-	else if (unit == "m" || unit == "M")
-		result *= 1024 * 1024;
-	return (result);
+long	convertToByte(std::string& value_str) {
+	size_t	multi = 1;
+	long		value;
+	if (value_str.find_first_not_of("0123456789") != std::string::npos &&
+		value_str.find_first_not_of("0123456789") != value_str.size() - 1)
+		return 0;
+	else if (value_str[value_str.size() - 1] != 'M' && value_str[value_str.size() - 1] != 'K' &&
+		value_str.find_first_not_of("0123456789") != std::string::npos)
+		return 0;
+	else if (value_str[value_str.size() - 1] == 'K') {
+		value_str.erase(value_str.size() - 1, std::string::npos);
+		multi = 1024;
+	}
+	else if (value_str[value_str.size() - 1] == 'M') {
+		value_str.erase(value_str.size() - 1, std::string::npos);
+		multi = 1024 * 1024;
+	}
+	if (value_str.size() > 10)
+		return 0;
+	std::istringstream(value_str) >> value;
+	return value * multi;
 }
 
 std::string	get_first_line(const std::string& str) {

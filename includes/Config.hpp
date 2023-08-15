@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:10:51 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 12:02:57 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:28:56 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Config {
 		void	print_methods_location(std::vector<std::string> method);
 		void	print_errors_location(std::map<int, std::string> errors);
 
-		void	check_ports() const;
+		void	check_content() const;
 
 		std::vector<Server>	_servConf;
 		std::ifstream		_file;
