@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:46:39 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/07/09 16:18:52 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 15:27:42 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	Webserv::createServers(void)
 				Socket* s = new Socket(AF_INET, SOCK_STREAM, 0, stoi(it->second), INADDR_ANY, j);
 				s->socketConf();
 				s->listeningMode(0);
-
+				std::cout << PURPLE_B << "{" << it->second << "} ";
 				struct kevent ev;
 				EV_SET(&ev, s->get_sock_fd(), EVFILT_READ, EV_ADD, 0, 0, nullptr);
 				_fd_map[s->get_sock_fd()].events = ev;
@@ -55,12 +55,12 @@ void	Webserv::createServers(void)
 				_sockets_list.push_back(s);
 			}
 			catch(std::runtime_error& e) {
-				std::cerr <<"Server " << (j+1) << "." << i << " error : " << e.what() << std::endl;
-				break;
+				throw std::runtime_error("Error listening to ports");
 			}
 			i++;
 		}
 	}
+	std::cout << NONE << std::endl;
 }
 
 void Webserv::runServers()

@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:14:51 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 12:28:27 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/15 15:22:44 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void	Config::printInfo(void) {
 		print_locations(_servConf[i]);
 		std::cout << "\n" << std::endl;
 	}
+	std::cout << PURPLE_B << "Listening to ports: ";
 }
 
 void	Config::check_content() const {
