@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:39:19 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/18 12:15:03 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:30:40 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	HTTP::do_work(void) {
 	if (_request.get_method() == "DELETE")
 	{
 		if (!delete_file())
-			_response.set_status_line("HTTP/1.1", 202 ,"Accepted");
+			_response.set_status_line("HTTP/1.1", 204 ,"No Content");
 		return (build_response(loc_config));
 	}
 	if (_req_path == "/downloaded.html")
@@ -152,10 +152,10 @@ bool	HTTP::execute_cgi(void) {
 	std::string contentType;
 	std::size_t pos = response.find("Content-Type:");
 	if (pos != std::string::npos) {
-        std::size_t newLinePos = response.find("\n", pos);
-        contentType = response.substr(pos + 13, newLinePos - pos - 13);
-        response.erase(pos, newLinePos - pos);
-    }
+		std::size_t newLinePos = response.find("\n", pos);
+		contentType = response.substr(pos + 13, newLinePos - pos - 13);
+		response.erase(pos, newLinePos - pos);
+	}
 	_response.set_content_type(contentType);	
 	_response.set_body(str_to_vector(response));
 	_response.set_status_line("HTTP/1.1", 200 ,"OK");
