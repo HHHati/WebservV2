@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:41:35 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 15:25:57 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:54:51 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,17 @@ int	Socket::grabConnection(void) {
 }
 
 int Socket::readConnection(int fd, std::string *req) {
-    int bytesRead;
-    _request.clear();
-    bzero(_buffer, sizeof(_buffer));
-    bytesRead = read(fd, _buffer, BUFFER_SIZE);
-    if (bytesRead > 0)
+	int bytesRead;
+	_request.clear();
+	bzero(_buffer, sizeof(_buffer));
+	bytesRead = read(fd, _buffer, BUFFER_SIZE);
+	if (bytesRead > 0)
 		for (int i = 0; i < bytesRead; i++)
-       		_request.push_back(_buffer[i]);
+			_request.push_back(_buffer[i]);
 	else
 		return (bytesRead);
 	*req = _request;
-    return (bytesRead);
+	return (bytesRead);
 }
 
 int Socket::giveResponse(int fd, std::string message) {
@@ -84,7 +84,7 @@ int Socket::giveResponse(int fd, std::string message) {
 	
 	std::cout << GREEN << "\n[RESPONSE HTML]" << std::endl;
 	std::cout << getHttpRequestWithoutBody(message).c_str() << NONE << std::endl << std::endl;
-    ret = send(fd, message.c_str(), message.size(), 0);
+	ret = send(fd, message.c_str(), message.size(), 0);
 	return ret;
 }
 
@@ -101,16 +101,16 @@ void	Socket::socketConf() {
 
 	rc = fcntl(_sockFD, F_SETFL, O_NONBLOCK);
 	if (rc < 0)
-  	{
+	{
 		close(_sockFD);
 		throw std::runtime_error("fcntl() failed");
-  	}
+	}
 	rc = setsockopt(_sockFD, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
-  	if (rc < 0)
-  	{
+	if (rc < 0)
+	{
 		close(_sockFD);
 		throw std::runtime_error("setsockopt() failed");
-  	}
+	}
 }
 
 void	Socket::shrink_socket_clients(int to_find) {

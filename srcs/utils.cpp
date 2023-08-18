@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:45:36 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 12:49:53 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:55:03 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,17 +119,17 @@ std::vector<char> str_to_vector(std::string str) {
 }
 
 std::string getHttpRequestBody(std::string httpRequest) {
-    std::size_t bodyStartIndex = httpRequest.find("\r\n\r\n");
-    if (bodyStartIndex == std::string::npos) {
-        return "";
-    }
-    return (httpRequest.substr(bodyStartIndex + 4));
+	std::size_t bodyStartIndex = httpRequest.find("\r\n\r\n");
+	if (bodyStartIndex == std::string::npos) {
+		return "";
+	}
+	return (httpRequest.substr(bodyStartIndex + 4));
 }
 
 std::string getHttpRequestWithoutBody(const std::string& httpRequest) {
-    size_t bodyStartIndex = httpRequest.find("\r\n\r\n");
-    if (bodyStartIndex == std::string::npos) {
-        return httpRequest;
-    }
-    return httpRequest.substr(0, bodyStartIndex);
+	size_t bodyStartIndex = httpRequest.find("\r\n\r\n");
+	if (bodyStartIndex == std::string::npos) {
+		return httpRequest;
+	}
+	return httpRequest.substr(0, bodyStartIndex);
 }

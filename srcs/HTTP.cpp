@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:39:19 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/07/09 15:38:24 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:49:00 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ HTTP::HTTP(const std::string& request_line, Config* Config, size_t serv_index) :
 
 void	HTTP::do_work(void) {
 	Server	loc_config = _config._locations[_location];
-
 	if (!check_protocol())
 	{
 		_response.set_status_line("HTTP/1.1", 505 ,"HTTP Version Not Supported");
@@ -212,7 +211,7 @@ bool	HTTP::check_method_allowed(const std::vector<std::string>& loc_methods, con
 	std::vector<std::string>::const_iterator	it1, it2;
 	it1 = std::find(loc_methods.begin(), loc_methods.end(), asked_method);
 	it2 = std::find(conf_methods.begin(), conf_methods.end(), asked_method);
-	if (it1 == loc_methods.end() && it2 == conf_methods.end())
+	if (it1 == loc_methods.end() && it2 == conf_methods.end()) 
 		return (true);
 	return (false);
 }
@@ -332,14 +331,14 @@ void	HTTP::build_directory_listing() {
 	std::string response = "<!DOCTYPE html> <html> <h1>Index of " + _req_path + "</h1>";
 	response += "<table><thead><tr><th role=\"button\">Name</th></tr></thead><tbody>";
 	while ((dir = readdir(pDir)) != NULL) {
-        response += "<tr>";
+		response += "<tr>";
 		response += "<td><a href=\"http://" + _config._listen.find("127.0.0.1")->first + ":" + _config._listen.find("127.0.0.1")->second + _req_path;
 		response += dir->d_name;
 		response += "\"> ";
 		response += dir->d_name;
 		response += "</a></td></tr>\n";
-    }
-    closedir (pDir);
+	}
+	closedir (pDir);
 	response += "</tbody></table></html>";
 	_response.set_body(str_to_vector(response));
 	_response.set_status_line("HTTP/1.1", 200 ,"OK");
@@ -361,7 +360,7 @@ void	HTTP::build_directory_listing_down() {
 	while ((dir = readdir(pDir)) != NULL) {
 		if (i > 1)
 		{
-        	response += "<tr>";
+			response += "<tr>";
 			response += "<td><a href=\"/uploads/";
 			response += dir->d_name;
 			response += "\"download> ";
@@ -369,8 +368,8 @@ void	HTTP::build_directory_listing_down() {
 			response += "</a></td></tr>\n";
 		}
 		i++;
-    }
-    closedir (pDir);
+	}
+	closedir (pDir);
 	response += "</tbody></table></html>";
 	_response.set_body(str_to_vector(response));
 	_response.set_status_line("HTTP/1.1", 200 ,"OK");

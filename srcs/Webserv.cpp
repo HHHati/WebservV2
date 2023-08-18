@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:46:39 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/15 15:27:42 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:52:41 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	Webserv::createServers(void)
 void Webserv::runServers()
 {
 	while (true)
-  	{
+	{
 		struct kevent evlist[1024];
 		int n = kevent(_kq, NULL, 0, evlist, 1024, NULL);
 		if (n == -1)
@@ -83,7 +83,7 @@ void Webserv::runServers()
 }
 
 void Webserv::handleServer(int fd, int filter)
-{	
+{
 	int		ret;
 
 	for (std::vector<Socket*>::iterator it = _sockets_list.begin(); it != _sockets_list.end(); it++)
@@ -98,10 +98,10 @@ void Webserv::handleServer(int fd, int filter)
 			for (size_t i = old_size; i < current_socket_client.size(); i++)
 			{
 				struct kevent event;
-        		EV_SET(&event, current_socket_client[i], EVFILT_READ, EV_ADD, 0, 0, NULL);
-        		_fd_map[current_socket_client[i]].events = event;
+			EV_SET(&event, current_socket_client[i], EVFILT_READ, EV_ADD, 0, 0, NULL);
+			_fd_map[current_socket_client[i]].events = event;
 				if (kevent(_kq, &event, 1, NULL, 0, NULL) == -1)
-          			std::cerr << "Error adding socket to kqueue" << std::endl;
+				std::cerr << "Error adding socket to kqueue" << std::endl;
 			}
 		}
 		else if (std::find(current_socket_client.begin(), current_socket_client.end(), fd) != current_socket_client.end())
@@ -123,7 +123,6 @@ void Webserv::handleServer(int fd, int filter)
 					close_connection(fd, current);
 					return ;
 				}
-
 				std::string transferEncodingStr = "Transfer-Encoding: chunked";
 				std::string contentLengthStr = "Content-Length: ";
 				if ((_fd_map[fd].req.find("GET") != std::string::npos) || (_fd_map[fd].req.find("DELETE") != std::string::npos) || (_fd_map[fd].req.find("HEAD") != std::string::npos))
@@ -132,14 +131,16 @@ void Webserv::handleServer(int fd, int filter)
 						finished_request(fd, current->get_serv_index());
 				}
 				else if (_fd_map[fd].req.find(contentLengthStr) != std::string::npos) {
-				    size_t contentLength = stoi(_fd_map[fd].req.substr(_fd_map[fd].req.find(contentLengthStr) + contentLengthStr.length()));
-				    if (_fd_map[fd].req.length() - _fd_map[fd].req.find("\r\n\r\n") - 4 >= contentLength)
-				        finished_request(fd, current->get_serv_index());
+					size_t contentLength = stoi(_fd_map[fd].req.substr(_fd_map[fd].req.find(contentLengthStr) + contentLengthStr.length()));
+					if (_fd_map[fd].req.length() - _fd_map[fd].req.find("\r\n\r\n") - 4 >= contentLength)
+						finished_request(fd, current->get_serv_index());
 				}
 				else if (_fd_map[fd].req.find(transferEncodingStr) != std::string::npos) {
-				    if (_fd_map[fd].req.substr(_fd_map[fd].req.length()-5) == "0\r\n\r\n")
-				        finished_request(fd, current->get_serv_index());
-				}	
+					if (_fd_map[fd].req.substr(_fd_map[fd].req.length()-5) == "0\r\n\r\n")
+						finished_request(fd, current->get_serv_index());
+				}
+				else
+					finished_request(fd, current->get_serv_index());
 			}
 			else if (filter == EVFILT_WRITE)
 			{
@@ -159,7 +160,7 @@ void Webserv::handleServer(int fd, int filter)
 							std::cout << BLUE << "Error sending to client (fd : " << fd << "), closing connection" << BLUE_B << std::endl;
 							close_connection(fd, current);
 							return ;
-						}		
+						}
 					}
 				}
 				else
@@ -235,10 +236,9 @@ void Webserv::clear_response(int fd)
 void	Webserv::shrink_kqueue_fd(int fd)
 {
 	struct kevent ev;
-  	EV_SET(&ev, fd, EVFILT_READ, EV_DELETE, 0, 0, 0);
-  	if (kevent(_kq, &ev, 1, NULL, 0, NULL) == -1) {
-    	std::cerr << "Error deleting socket from kqueue" << std::endl;
-  	}
+	EV_SET(&ev, fd, EVFILT_READ, EV_DELETE, 0, 0, 0);
+	if (kevent(_kq, &ev, 1, NULL, 0, NULL) == -1) {		std::cerr << "Error deleting socket from kqueue" << std::endl;
+	}
 }
 
 std::vector<std::string> Webserv::chunk_message(int fd, std::string *message)
