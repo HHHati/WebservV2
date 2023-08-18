@@ -6,7 +6,7 @@
 /*   By: bade-lee <bade-lee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:39:19 by bade-lee          #+#    #+#             */
-/*   Updated: 2023/08/18 11:49:00 by bade-lee         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:15:03 by bade-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,7 +332,7 @@ void	HTTP::build_directory_listing() {
 	response += "<table><thead><tr><th role=\"button\">Name</th></tr></thead><tbody>";
 	while ((dir = readdir(pDir)) != NULL) {
 		response += "<tr>";
-		response += "<td><a href=\"http://" + _config._listen.find("127.0.0.1")->first + ":" + _config._listen.find("127.0.0.1")->second + _req_path;
+		response += "<td><a href=\"http://" + _config._listen.find("127.0.0.1")->first + ":" + _req_path;
 		response += dir->d_name;
 		response += "\"> ";
 		response += dir->d_name;
